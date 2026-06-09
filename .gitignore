@@ -1,0 +1,5 @@
+.env
+audit_trail.jsonl
+__pycache__/
+.venv/
+.DS_Store
