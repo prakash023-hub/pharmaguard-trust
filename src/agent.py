@@ -9,6 +9,8 @@ import json
 import sys
 from pathlib import Path
 
+from casper_chain import log_attestation
+
 # Reuse clinical logic pattern from PharmaGuard
 DRUG_DB = {
     "nitrofurantoin": {"aware": "ACCESS", "renal": "eGFR < 30 contraindicated"},
@@ -51,16 +53,24 @@ def run_trust_agent(query: str) -> dict:
         "query_hash": hashlib.sha256(query.encode()).hexdigest(),
         "platform": "casper_testnet",
         "open_did": "VC/VP flow via OmniOne CX — integrate in production",
-        "omnione_chain": "ComplianceAudit.recordLookup on deploy",
+        "omnione_chain": "ComplianceAttestation.log_attestation on deploy",
         "x402": "Agent micropayment per lookup — see contracts/ComplianceAudit.sol",
         "result": result,
     }
+
+    chain = log_attestation(sid, audit["query_hash"], result["aware"])
+    audit["casper_tx"] = chain
 
     log_path = Path(__file__).resolve().parent.parent / "audit_trail.jsonl"
     with log_path.open("a", encoding="utf-8") as f:
         f.write(json.dumps(audit) + "\n")
 
-    return {"session_id": sid, "audit": audit, "answer": result["recommendation"]}
+    return {
+        "session_id": sid,
+        "audit": audit,
+        "answer": result["recommendation"],
+        "casper_tx": chain,
+    }
 
 
 def main() -> None:

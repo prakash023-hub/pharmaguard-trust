@@ -3,3 +3,4 @@ audit_trail.jsonl
 __pycache__/
 .venv/
 .DS_Store
+pharmaguard_attestation/target/

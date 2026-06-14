@@ -1,0 +1,146 @@
+{
+  "casper_contract_schema_version": 1,
+  "toolchain": "rustc 1.94.0-nightly (8d670b93d 2025-12-31)",
+  "authors": [],
+  "repository": null,
+  "homepage": null,
+  "contract_name": "ComplianceAttestation",
+  "contract_version": "0.1.0",
+  "types": [
+    {
+      "struct": {
+        "name": "AttestationLogged",
+        "description": null,
+        "members": [
+          {
+            "name": "session_id",
+            "description": null,
+            "ty": "String"
+          },
+          {
+            "name": "query_hash",
+            "description": null,
+            "ty": "String"
+          },
+          {
+            "name": "aware_category",
+            "description": null,
+            "ty": "String"
+          }
+        ]
+      }
+    },
+    {
+      "struct": {
+        "name": "AttestationRecord",
+        "description": null,
+        "members": [
+          {
+            "name": "query_hash",
+            "description": null,
+            "ty": "String"
+          },
+          {
+            "name": "aware_category",
+            "description": null,
+            "ty": "String"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "entry_points": [
+    {
+      "name": "log_attestation",
+      "description": "",
+      "is_mutable": true,
+      "arguments": [
+        {
+          "name": "session_id",
+          "description": null,
+          "ty": "String",
+          "optional": false
+        },
+        {
+          "name": "query_hash",
+          "description": null,
+          "ty": "String",
+          "optional": false
+        },
+        {
+          "name": "aware_category",
+          "description": null,
+          "ty": "String",
+          "optional": false
+        }
+      ],
+      "return_ty": "Unit",
+      "is_contract_context": true,
+      "access": "public"
+    },
+    {
+      "name": "lookup_count",
+      "description": "",
+      "is_mutable": false,
+      "arguments": [],
+      "return_ty": "U32",
+      "is_contract_context": true,
+      "access": "public"
+    },
+    {
+      "name": "get_attestation",
+      "description": "",
+      "is_mutable": false,
+      "arguments": [
+        {
+          "name": "session_id",
+          "description": null,
+          "ty": "String",
+          "optional": false
+        }
+      ],
+      "return_ty": {
+        "Option": "AttestationRecord"
+      },
+      "is_contract_context": true,
+      "access": "public"
+    }
+  ],
+  "events": [
+    {
+      "name": "AttestationLogged",
+      "ty": "AttestationLogged"
+    }
+  ],
+  "call": {
+    "wasm_file_name": "ComplianceAttestation.wasm",
+    "description": "",
+    "arguments": [
+      {
+        "name": "odra_cfg_package_hash_key_name",
+        "description": "The arg name for the package hash key name.",
+        "ty": "String",
+        "optional": false
+      },
+      {
+        "name": "odra_cfg_allow_key_override",
+        "description": "If true and the key specified in odra_cfg_package_hash_key_name already exists, it will be overwritten.",
+        "ty": "Bool",
+        "optional": false
+      },
+      {
+        "name": "odra_cfg_is_upgradable",
+        "description": "The arg name for the contract upgradeability setting.",
+        "ty": "Bool",
+        "optional": false
+      },
+      {
+        "name": "odra_cfg_is_upgrade",
+        "description": "The arg name for telling the installer that the contract is being upgraded.",
+        "ty": "Bool",
+        "optional": false
+      }
+    ]
+  }
+}
